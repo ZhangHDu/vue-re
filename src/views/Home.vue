@@ -32,7 +32,7 @@
               <span>公告</span>
             </a>
           </li>
-          <li @click="showAll">
+          <li @click="showAll" :class="{isOn:isShow == true,isOff:isShow == false}">
             <div class="one"></div>
             <div class="two"></div>
             <div class="three"></div>
@@ -225,7 +225,7 @@ export default {
       ul{
         display: flex;
         justify-content: center;
-        li:nth-child(6){
+        .isOff{
           width: 20px;
           height: 10px;
           margin-top: 15px;
@@ -247,7 +247,7 @@ export default {
             transition: all ease 0.5s;
           }
         }
-        li:nth-child(6):hover{
+        .isOff:hover{
           .one{
             background-color: #333;
             width: 17px;
@@ -270,6 +270,31 @@ export default {
             border-radius: 1px;
           }
         }
+        .isOn{
+          width: 20px;
+          height: 20px;
+          margin-top: 10px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          .one{
+            width: 20px;
+            height: 2px;
+            border-radius: 1px;
+            background-color: #333;
+            transform: rotate(45deg);
+            transition: all ease 0.5s;
+          }
+          .three{
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            border-radius: 1px;
+            background-color: #333;
+            transform: rotate(-45deg);
+            transition: all ease 0.5s;
+          }
+        }
         .on{
           transition: all ease 1s;
           margin-right: 20px;
@@ -286,6 +311,7 @@ export default {
           overflow: hidden;
           transition: all ease 1s;
           width: 0;
+          height: 0;
           a{
             span{
                display: inline-block;
@@ -599,21 +625,22 @@ export default {
     }
   }
   .contact{
-    padding-top: 80px;
+    margin-top: 80px;
+    padding: 0 10px;
     color: #000;
     text-align: center;
     h2{
       font-weight: 300;
-      font-size: 30px;
+      font-size: 24px;
     }
     h3{
       font-weight: 300;
-      font-size: 16px;
+      font-size: 14px;
 
     }
     .phone{
       font-weight: 300;
-      font-size: 18px;
+      font-size: 14px;
       margin: 30px 10px 10px 10px;
       border-top: 1px solid #000;
       border-bottom: 1px solid #000;
@@ -623,7 +650,7 @@ export default {
       font-weight: 300;
       display: block;
       color: #000;
-      font-size: 16px;
+      font-size: 14px;
     }
     .person{
       font-size: 14px;
@@ -631,19 +658,6 @@ export default {
     }
     .text{
       display: none;
-      margin: 120px auto 0 auto;
-      color: #9e9e9e;
-      font-size: 18px;
-      font-weight: 300;
-      h1{
-        font-size: 21.6px;
-        font-weight: 300;
-        color: #333;
-      }
-      strong{
-        font-weight: 300;
-        text-decoration: underline;
-      }
     }
     .fansLogo{
       padding: 20px;
