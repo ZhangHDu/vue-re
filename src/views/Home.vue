@@ -21,15 +21,21 @@
               <span>联系</span>
             </a>
           </li>
-          <li>
+          
+          <li :class="{off: isShow == false,on:isShow == true}">
             <a href="#">
               <span>分享</span>
             </a>
           </li>
-          <li>
+          <li :class="{off: isShow == false,on:isShow == true}">
             <a href="#">
               <span>公告</span>
             </a>
+          </li>
+          <li @click="showAll">
+            <div class="one"></div>
+            <div class="two"></div>
+            <div class="three"></div>
           </li>
         </ul>
       </div>
@@ -138,7 +144,7 @@ export default {
   data(){
     return{
       Data, // 首页数据
-      down:false
+      isShow:false
     }
   },
   methods:{
@@ -170,6 +176,11 @@ export default {
       if(scroll<0 && header.style.padding == "20px 0px"){
         header.style.padding = '10px 0'
       }
+    },
+    showAll(){
+      this.isShow = ! this.isShow
+      
+       
     }
   },
   mounted(){
@@ -180,7 +191,7 @@ export default {
   },
   components: {
    
-  }
+  },
 }
 </script>
 <style scoped lang='less'>
@@ -214,7 +225,77 @@ export default {
       ul{
         display: flex;
         justify-content: center;
+        li:nth-child(6){
+          width: 20px;
+          height: 10px;
+          margin-top: 15px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .one,.two{
+            background-color: #333;
+            width: 20px;
+            height: 2px;
+            border-radius: 1px;
+            transition: all ease 0.5s;
+          }
+          .three{
+            width: 10px;
+            height: 2px;
+            background-color: #333;
+            border-radius: 1px;
+            transition: all ease 0.5s;
+          }
+        }
+        li:nth-child(6):hover{
+          .one{
+            background-color: #333;
+            width: 17px;
+            height: 2px;
+            border-radius: 1px;
+            transition: all ease 0.5s;
+          }
+          .two{
+            background-color: #333;
+            width: 9px;
+            height: 2px;
+            transition: all ease 0.5s;
+            border-radius: 1px;
+          }
+          .three{
+            width: 20px;
+            height: 2px;
+            transition: all ease 0.5s;
+            background-color: #333;
+            border-radius: 1px;
+          }
+        }
+        .on{
+          transition: all ease 1s;
+          margin-right: 20px;
+          a{
+            span{
+              display: inline-block;
+              line-height: 40px;
+              height: 40px;
+            }
+          }
+        }
+        .off{
+          margin: 0;
+          overflow: hidden;
+          transition: all ease 1s;
+          width: 0;
+          a{
+            span{
+               display: inline-block;
+              line-height: 40px;
+              height: 40px;
+            }
+          }
+        }
         li{
+          transition: all ease 1s;
           margin-right: 20px;
           a{
             span{
