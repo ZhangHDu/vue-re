@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <header>
-      <div class="logo">
+    <header @mouseover="mouseIn" @mouseleave="mouseOut">
+      <div class="logo"> 
         <img src="../assets/icon/牛油果.png" alt="">
       </div>
       <div class="right">
@@ -39,19 +39,22 @@
     </header>
     <main>
       <div class="pic">
-        <img src="../assets/images/下载.png" alt="">
+        <img class="img" src="../assets/images/下载.png" alt="">
       </div>
       <div class="container">
         <div class="box" >
           <ul >
             <li v-for="item in Data" :key="item.id">
-              <div class="blur">
-                <div class="name">{{item.name}}</div>
-                <div class="txt1">{{item.txt1}}</div>
-                <div class="txt2">{{item.txt2}}</div>
+              <a href="#">
+                <div class="blur">
+                <div class="name">{{item.name}}
+                    <div class="txt1">{{item.txt1}}</div>
+                    <div class="txt2">{{item.txt2}}</div>
+                </div>
                 <div class="url">{{item.url}}</div>
               </div>
               <img :src="item.imgUrl" alt="">
+              </a>
             </li>
           </ul>
           
@@ -135,7 +138,45 @@ export default {
   data(){
     return{
       Data, // 首页数据
+      down:false
     }
+  },
+  methods:{
+    scrollRun(){
+      var header = document.querySelector('header')
+      var scroll = document.querySelector('.img').getBoundingClientRect().top
+      var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+      console.log(w);
+      if(scroll<0 && w>375){
+          header.style.padding = '10px 0'
+      }else if(scroll<0 && w<=375){
+         header.style.padding = '10px 10px'  
+      }else if(scroll>0 && w >375){
+        header.style.padding = '20px 0px'  
+      }else if(scroll>0 && w <=375){
+        header.style.padding = '20px 10px'  
+      }
+    },
+    mouseIn(){
+      var header = document.querySelector('header')
+      if(header.style.padding == "10px 0px"){
+        header.style.padding = '20px 0'
+      }
+       
+    },
+    mouseOut(){
+      var header = document.querySelector('header')
+      var scroll = document.querySelector('.img').getBoundingClientRect().top
+      if(scroll<0 && header.style.padding == "20px 0px"){
+        header.style.padding = '10px 0'
+      }
+    }
+  },
+  mounted(){
+    window.addEventListener('scroll',this.scrollRun)
+  },
+  destoryed(){
+    window.removeEventListener('scroll', this.scrollRun)
   },
   components: {
    
@@ -154,9 +195,12 @@ export default {
   header{
     position: fixed;
     top: 0;
+    opacity: 1;
     display: flex;
     padding: 20px 0;
     background-color: #fff;
+    z-index: 2;
+    transition: all ease 1s;
     .logo{
       img{
         margin: 0 40px 0 10px;
@@ -218,15 +262,38 @@ export default {
             overflow: hidden;
             position: relative;
             .blur{
+              opacity: 0;
               position: absolute;
+              background-color: rgba(255, 255, 255, 0.766);
+              width: 100%;
+              padding: 20px;
+              box-sizing: border-box;
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              color: #5b5b5b;
+              transition: all ease 0.5s;
+              .name{
+                
+                font-size: 18px;
+                font-weight: 300;
+                div{
+                  font-size: 12px;
+                }
+              }
+              .url{
+                font-size: 16;
+                font-weight: 300;
+              }
             }
             img{
               display: block;
               width: 100%;
             }
           }
-          li:hover{
-           
+          li:hover .blur{
+            opacity: 100;
             // background-color: red;
           }
           li:nth-child(7){
@@ -346,6 +413,7 @@ export default {
     justify-content: space-between;
     background-color: #fff;
     box-sizing: border-box;
+    transition: all ease 1s;
     .logo{
       img{
         margin: 2px 20px;
@@ -408,7 +476,9 @@ export default {
            
           li{
             // display: list-item;
-            
+            .blur{
+              display: none;
+            }
             padding: 10px;
             overflow: hidden;
             img{
